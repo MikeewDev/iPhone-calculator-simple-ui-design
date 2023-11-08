@@ -1,25 +1,98 @@
-  document.getElementById('gerarLink').addEventListener('click', function() {
-    const ddd = document.getElementById('ddd').value;
-    const numero = document.getElementById('numero').value;
-    const mensagem = encodeURIComponent(document.getElementById('mensagem').value);
+let currentInput = '';
+let previousInput = '';
+let operation = null;
+let shouldResetScreen = false;
 
-    if (ddd && numero && mensagem) {
-      const link = `https://wa.me/${ddd}${numero}?text=${mensagem}`;
-      document.querySelector('.text-link').innerHTML = `<p><a href="#" id="generatedLink">${link}</a></p>`;
-    } else {
-      alert('Please fill in all the required fields.');
-      document.querySelector('.text-link').innerHTML = '<p>Link (Click to copy)</p>';
-    }
-  });
+const display = document.getElementById('display');
+const buttons = document.querySelectorAll('button');
 
-  document.querySelector('.text-link').addEventListener('click', function(event) {
-    if (event.target.id === 'generatedLink') {
-      const tempInput = document.createElement('input');
-      tempInput.value = event.target.textContent;
-      document.body.appendChild(tempInput);
-      tempInput.select();
-      document.execCommand('copy');
-      document.body.removeChild(tempInput);
-      alert('Link copied to clipboard.');
+buttons.forEach(button => {
+    button.addEventListener('click', () => {
+        switch (button.textContent) {
+            case 'AC':
+                clear();
+                updateDisplay();
+                break;
+            case '±':
+                if (currentInput) currentInput = currentInput.startsWith('-') ? currentInput.substr(1) : '-' + currentInput;
+                updateDisplay();
+                break;
+            case '%':
+                if (currentInput) currentInput = String(parseFloat(currentInput) / 100);
+                updateDisplay();
+                break;
+            case '÷':
+            case '×':
+            case '-':
+            case '+':
+                setOperation(button.textContent);
+                break;
+            case '=':
+                calculate();
+                updateDisplay();
+                break;
+            case '.':
+                if (!currentInput.includes('.')) currentInput += '.';
+                updateDisplay();
+                break;
+            default:
+                if (shouldResetScreen) resetScreen();
+                currentInput += button.textContent;
+                updateDisplay();
+                break;
+        }
+    });
+});
+
+function setOperation(op) {
+    if (currentInput === '') return;
+    if (previousInput !== '') calculate();
+    operation = op;
+    previousInput = currentInput;
+    currentInput = '';
+}
+
+function calculate() {
+    let calculation;
+    const prev = parseFloat(previousInput);
+    const current = parseFloat(currentInput);
+    if (isNaN(prev) || isNaN(current)) return;
+    switch (operation) {
+        case '÷':
+            calculation = prev / current;
+            break;
+        case '×':
+            calculation = prev * current;
+            break;
+        case '-':
+            calculation = prev - current;
+            break;
+        case '+':
+            calculation = prev + current;
+            break;
+        default:
+            return;
     }
-  });
+    currentInput = calculation.toString();
+    operation = undefined;
+    previousInput = '';
+    shouldResetScreen = true;
+}
+
+function clear() {
+    currentInput = '';
+    previousInput = '';
+    operation = null;
+}
+
+function resetScreen() {
+    currentInput = '';
+    shouldResetScreen = false;
+}
+
+function updateDisplay() {
+  let formattedNumber = Number(currentInput).toLocaleString('pt-BR');
+  display.textContent = formattedNumber !== '0' ? formattedNumber : '0';
+}
+
+updateDisplay();
