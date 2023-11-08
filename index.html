@@ -4,22 +4,61 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" type="text/css" href="styles.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
-  <title>Link Generator for WhatsApp</title>
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="styles.css">
+  <title>Calculadora do iPhone</title>
 </head>
 
 <body>
-  <div class="container">
-    <h1>Link Generator for WhatsApp</h1>
-    <input type="text" id="ddd" placeholder="Your DDD (whith +)">
-    <input type="text" id="numero" placeholder="Your number">
-    <textarea id="mensagem" placeholder="Your message"></textarea>
-    <div class="text-link">
-      <p>Link (Click to copy)</p>
+  
+  <div class="calculator">
+    <div class="nar-bar-top">
+      <div class="nav-top">
+        <p>09:41</p>
+      </div>
+      <div class="nav-top">
+        <img style="padding-right: 2px;" src="ic-signal.png" alt="">
+        <img style="padding-right: 5px;" src="ic-wifi.png" alt="">
+        <img src="ic-battery.png" alt="">
+      </div>
     </div>
-    <button id="gerarLink">Generate link</button>
+    <div class="display" id="display">0</div>
+    <div class="button-row">
+      <button class="button ac">AC</button>
+      <button class="button neg">+/-</button>
+      <button class="button percent">%</button>
+      <button class="button operator">÷</button>
+    </div>
+    <div class="button-row">
+      <button class="button">7</button>
+      <button class="button">8</button>
+      <button class="button">9</button>
+      <button class="button operator">×</button>
+    </div>
+    <div class="button-row">
+      <button class="button">4</button>
+      <button class="button">5</button>
+      <button class="button">6</button>
+      <button class="button operator">-</button>
+    </div>
+    <div class="button-row">
+      <button class="button">1</button>
+      <button class="button">2</button>
+      <button class="button">3</button>
+      <button class="button operator">+</button>
+    </div>
+    <div class="button-row">
+      <button class="button zero">0</button>
+      <button class="button dot">.</button>
+      <button class="button operator">=</button>
+    </div>
+    <div class="nav-bar-footer">
+      <div class="nav-bar">
+        
+      </div>
+    </div>
   </div>
+  
   <script src="script.js"></script>
 </body>
 
